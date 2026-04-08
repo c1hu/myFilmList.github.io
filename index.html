@@ -34,7 +34,6 @@
     position: relative;
   }
 
-  /* ── Film Grain Overlay ── */
   body::before {
     content: '';
     position: fixed;
@@ -54,7 +53,6 @@
     100% { transform: translate(-1px, 2px); }
   }
 
-  /* ── Film Sprocket Holes (left & right) ── */
   .sprocket-strip {
     position: fixed;
     top: 0;
@@ -80,7 +78,6 @@
     flex-shrink: 0;
   }
 
-  /* ── Main Container ── */
   .main-wrap {
     margin: 0 38px;
     min-height: 100vh;
@@ -88,7 +85,6 @@
     flex-direction: column;
   }
 
-  /* ── Header ── */
   header {
     padding: 30px 40px 0;
     display: flex;
@@ -134,7 +130,6 @@
     color: var(--text);
   }
 
-  /* ── Navigation ── */
   nav {
     display: flex;
     gap: 0;
@@ -155,9 +150,7 @@
     white-space: nowrap;
   }
   .nav-tab:hover { color: var(--text); }
-  .nav-tab.active {
-    color: var(--accent);
-  }
+  .nav-tab.active { color: var(--accent); }
   .nav-tab.active::after {
     content: '';
     position: absolute;
@@ -167,7 +160,6 @@
     background: var(--accent);
   }
 
-  /* ── Content Area ── */
   .content {
     flex: 1;
     padding: 36px 40px 60px;
@@ -180,7 +172,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── Section Styles ── */
   .section-title {
     font-family: 'Press Start 2P', monospace;
     font-size: 14px;
@@ -199,7 +190,6 @@
   .about-text p { margin-bottom: 16px; }
   .about-text .highlight { color: var(--accent); }
 
-  /* ── Douban Button ── */
   .douban-btn {
     display: inline-flex;
     align-items: center;
@@ -228,7 +218,6 @@
     flex-shrink: 0;
   }
 
-  /* ── Film List (merged with reviews) ── */
   .film-table {
     width: 100%;
     border-collapse: collapse;
@@ -254,9 +243,7 @@
     cursor: pointer;
     transition: background 0.2s;
   }
-  .film-row:hover td {
-    background: var(--surface);
-  }
+  .film-row:hover td { background: var(--surface); }
   .film-row.has-review td:first-child {
     position: relative;
     padding-left: 28px;
@@ -289,7 +276,6 @@
     margin: 1px 2px;
   }
 
-  /* ── External Link Icons ── */
   .ext-links {
     display: inline-flex;
     gap: 8px;
@@ -322,12 +308,8 @@
     background: transparent;
     border: 1.5px solid var(--letterboxd);
   }
-  .ext-link.letterboxd svg {
-    width: 14px;
-    height: 14px;
-  }
+  .ext-link.letterboxd svg { width: 14px; height: 14px; }
 
-  /* ── Review Expand Row ── */
   .review-row td {
     padding: 0 !important;
     border-bottom: 1px solid #1a1a1a;
@@ -339,12 +321,8 @@
     background: var(--surface);
     border-left: 3px solid var(--accent);
   }
-  .review-expand.open {
-    max-height: 400px;
-  }
-  .review-expand-inner {
-    padding: 24px 30px;
-  }
+  .review-expand.open { max-height: 400px; }
+  .review-expand-inner { padding: 24px 30px; }
   .review-expand-inner p {
     font-family: 'Silkscreen', monospace;
     font-size: 13px;
@@ -358,7 +336,6 @@
     color: var(--accent);
   }
 
-  /* ── Top 10 ── */
   .top-list {
     list-style: none;
     counter-reset: top;
@@ -388,9 +365,7 @@
   .top-item:nth-child(-n+3)::before {
     text-shadow: 0 0 10px rgba(245,197,24,0.4);
   }
-  .top-info {
-    flex: 1;
-  }
+  .top-info { flex: 1; }
   .top-info h4 {
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
@@ -409,7 +384,6 @@
     flex-shrink: 0;
   }
 
-  /* ── Footer ── */
   footer {
     padding: 20px 40px;
     text-align: center;
@@ -420,7 +394,6 @@
     letter-spacing: 1px;
   }
 
-  /* ── Scanline effect (subtle) ── */
   .main-wrap::after {
     content: '';
     position: fixed;
@@ -435,7 +408,6 @@
     z-index: 100;
   }
 
-  /* ── Responsive ── */
   @media (max-width: 768px) {
     .sprocket-strip { width: 20px; }
     .sprocket-hole { width: 10px; height: 7px; }
@@ -456,12 +428,10 @@
 </head>
 <body>
 
-<!-- Film Sprocket Strips -->
 <div class="sprocket-strip left" id="sprocketsLeft"></div>
 <div class="sprocket-strip right" id="sprocketsRight"></div>
 
 <div class="main-wrap">
-  <!-- Header -->
   <header>
     <div class="site-title">
       <span class="accent">▶</span> MY <span class="accent">CINEMA</span>
@@ -472,23 +442,18 @@
     </div>
   </header>
 
-  <!-- Navigation -->
   <nav id="mainNav">
     <button class="nav-tab active" data-tab="about"   data-zh="关于我" data-en="About Me">关于我</button>
     <button class="nav-tab"        data-tab="reviews" data-zh="影评" data-en="Reviews">影评</button>
     <button class="nav-tab"        data-tab="top10"   data-zh="十佳" data-en="Top 10">十佳</button>
   </nav>
 
-  <!-- Content -->
   <div class="content">
 
-    <!-- ═══════ ABOUT ME ═══════ -->
     <div class="tab-panel active" id="panel-about">
       <h2 class="section-title" data-zh="关于我" data-en="About Me">关于我</h2>
       <div class="about-text">
-        <p data-zh="你好，我是Troy。" data-en="Hi, I'm Troy.">
-          你好，我是Troy。
-        </p>
+        <p data-zh="你好，我是Troy。" data-en="Hi, I'm Troy.">你好，我是Troy。</p>
         <p data-zh="这个页面记录了我看过的电影，欢迎来到我的电影世界。"
            data-en="This page documents the films I've watched and welcome to come to my cinema world.">
           这个页面记录了我看过的电影，欢迎来到我的电影世界。
@@ -506,7 +471,6 @@
       </div>
     </div>
 
-    <!-- ═══════ REVIEWS (merged film list + reviews) ═══════ -->
     <div class="tab-panel" id="panel-reviews">
       <h2 class="section-title" data-zh="影评" data-en="Reviews">影评</h2>
       <table class="film-table" id="filmTable">
@@ -520,97 +484,148 @@
             <th data-zh="链接" data-en="Links">链接</th>
           </tr>
         </thead>
-        <tbody id="filmBody">
-          <!-- Populated by JS -->
-        </tbody>
+        <tbody id="filmBody"></tbody>
       </table>
     </div>
 
-    <!-- ═══════ TOP 10 ═══════ -->
     <div class="tab-panel" id="panel-top10">
       <h2 class="section-title" data-zh="我的十佳" data-en="My Top 10">我的十佳</h2>
-      <ol class="top-list" id="topList">
-        <!-- Populated by JS -->
-      </ol>
+      <ol class="top-list" id="topList"></ol>
     </div>
 
   </div>
 
   <footer>
-    <span data-zh="© 2025 MY CINEMA · 用胶片记录光影" data-en="© 2025 MY CINEMA · Stories told in celluloid">© 2025 MY CINEMA · 用胶片记录光影</span>
+    <span data-zh="©MY CINEMA · 我们电影院见" data-en="©MY CINEMA · See you in the movie theater">©MY CINEMA · 我们电影院见</span>
   </footer>
 </div>
 
 <script>
   // ══════════════════════════════════════════════════
-  //  DATA — Edit your films, reviews, and top 10 here
+  //  影评数据 — 只有这些会显示在「影评」选项卡中
+  //  Reviews data — only these show in the Reviews tab
   // ══════════════════════════════════════════════════
 
   const films = [
     {
-      zh: '2001太空漫游', en: '2001: A Space Odyssey',
-      dirZh: '斯坦利·库布里克', dirEn: 'Stanley Kubrick',
-      year: 1968,
-      genreZh: ['科幻'], genreEn: ['Sci-Fi'],
+      zh: '两生花', en: 'The Double Life of Véronique',
+      dirZh: '克日什托夫·基耶斯洛夫斯基', dirEn: 'Krzysztof Kieślowski',
+      year: 1991,
+      genreZh: ['剧情', '奇幻'], genreEn: ['Drama', 'Fantasy'],
       rating: '★★★★★',
-      letterboxd: 'https://letterboxd.com/film/2001-a-space-odyssey/',
-      imdb: 'https://www.imdb.com/title/tt0062622/',
-      reviewZh: '库布里克用影像重新定义了科幻电影的边界。从猿人到星孩，人类文明的演化被压缩进一场视觉与哲学的交响。每一帧都是对未知的敬畏。',
-      reviewEn: 'Kubrick redefined the boundaries of sci-fi cinema through imagery. From ape to star-child, the evolution of human civilization is compressed into a symphony of visuals and philosophy. Every frame is a reverence for the unknown.'
+      letterboxd: 'https://letterboxd.com/film/the-double-life-of-veronique/',
+      imdb: 'https://www.imdb.com/title/tt0101765/',
+      reviewZh: '基耶斯洛夫斯基用金色的光晕编织了一场关于灵魂共振的梦。两个维罗妮卡，一个在克拉科夫歌唱至死，一个在巴黎感受到了莫名的失落。影片不试图解释什么，它只是让你在离开影院之后，忽然觉得世界上某个角落也许有人正与你同频呼吸。',
+      reviewEn: 'Kieślowski weaves a dream of soul resonance in golden light. Two Véroniques — one sings to death in Kraków, the other feels an inexplicable loss in Paris. The film never tries to explain; it simply leaves you wondering if somewhere in the world, someone is breathing in sync with you.'
     },
     {
-      zh: '猎鹿人', en: 'The Deer Hunter',
-      dirZh: '迈克尔·西米诺', dirEn: 'Michael Cimino',
-      year: 1978,
-      genreZh: ['战争', '剧情'], genreEn: ['War', 'Drama'],
-      rating: '★★★★★',
-      letterboxd: 'https://letterboxd.com/film/the-deer-hunter/',
-      imdb: 'https://www.imdb.com/title/tt0077416/',
-      reviewZh: '战争电影的巅峰之作。俄罗斯轮盘赌的场景至今令人窒息。西米诺展现的不是战场上的英雄主义，而是战争如何摧毁普通人的灵魂。',
-      reviewEn: 'A pinnacle of war cinema. The Russian roulette scenes remain suffocating to this day. Cimino shows not heroism on the battlefield, but how war destroys the souls of ordinary people.'
-    },
-    {
-      zh: '花样年华', en: 'In the Mood for Love',
-      dirZh: '王家卫', dirEn: 'Wong Kar-wai',
-      year: 2000,
-      genreZh: ['爱情', '剧情'], genreEn: ['Romance', 'Drama'],
+      zh: '秘密与谎言', en: 'Secrets & Lies',
+      dirZh: '迈克·李', dirEn: 'Mike Leigh',
+      year: 1996,
+      genreZh: ['剧情'], genreEn: ['Drama'],
       rating: '★★★★☆',
-      letterboxd: 'https://letterboxd.com/film/in-the-mood-for-love/',
-      imdb: 'https://www.imdb.com/title/tt0118694/',
-      reviewZh: '',
-      reviewEn: ''
+      letterboxd: 'https://letterboxd.com/film/secrets-lies/',
+      imdb: 'https://www.imdb.com/title/tt0117589/',
+      reviewZh: '迈克·李最擅长的就是把日常生活拍出令人窒息的张力。那场生日聚会上真相揭开的长镜头，所有人的表演都精准得可怕。布兰达·布莱斯的哭戏不是在演，是在把一个女人二十年的沉默一次性倾倒出来。',
+      reviewEn: 'Mike Leigh excels at wringing suffocating tension from everyday life. The long take at the birthday party where truths unravel is terrifyingly precise in its performances. Brenda Blethyn\'s breakdown isn\'t acting — it\'s twenty years of silence pouring out of a woman all at once.'
     },
     {
-      zh: '七武士', en: 'Seven Samurai',
-      dirZh: '黑泽明', dirEn: 'Akira Kurosawa',
-      year: 1954,
-      genreZh: ['动作', '剧情'], genreEn: ['Action', 'Drama'],
-      rating: '★★★★★',
-      letterboxd: 'https://letterboxd.com/film/seven-samurai/',
-      imdb: 'https://www.imdb.com/title/tt0047478/',
-      reviewZh: '',
-      reviewEn: ''
-    },
-    {
-      zh: '潜行者', en: 'Stalker',
-      dirZh: '安德烈·塔可夫斯基', dirEn: 'Andrei Tarkovsky',
-      year: 1979,
-      genreZh: ['科幻', '剧情'], genreEn: ['Sci-Fi', 'Drama'],
+      zh: '星河战队', en: 'Starship Troopers',
+      dirZh: '保罗·范霍文', dirEn: 'Paul Verhoeven',
+      year: 1997,
+      genreZh: ['科幻', '动作'], genreEn: ['Sci-Fi', 'Action'],
       rating: '★★★★☆',
-      letterboxd: 'https://letterboxd.com/film/stalker/',
-      imdb: 'https://www.imdb.com/title/tt0079944/',
-      reviewZh: '',
-      reviewEn: ''
+      letterboxd: 'https://letterboxd.com/film/starship-troopers/',
+      imdb: 'https://www.imdb.com/title/tt0120201/',
+      reviewZh: '1959年美国科幻大师海因莱因的代表作品——《星船伞兵》一经问世便因其“宣扬法西斯主义”遭到大量批评。而快40年后，在好莱坞颇有地位的范霍文却将决定其电影化。保罗范霍文幼时亲历二战，童年的经历使他对纳粹符号和强权崇拜充满兴趣，在他的诸多作品中都有过明显的体现。这自然会招来一些评论者的批评，被扣上“宣扬纳粹”的帽子，但也说明了范霍文会对这本小说的主题着迷的原因。 在不少观众和影评人对本片意识形态猛烈的抨击下，这部投资高达1亿美元的电影最终以票房惨败告终。那么本片到底是在宣扬还是在暗讽法西斯主义呢？这并不容易去评判。但如果深入到电影本身，它以一种全新且高明的方式讲述了纳粹的运作方式。整部电影的剧情推进方式是十分好莱坞式的，角色在设置上和转变上也和通常的商业大片十分类似，所以很容易变将它看作为一部庸俗的爆米花电影。但实际如果稍微仔细一看，便会发现这诸多看似不能更套路的剧情其实巧妙地服从于整个主题，并由此引申出一种与通常好莱坞大片截然不同的意味，从而达成某种似乎是反讽的效果。 纳粹的符号在全片可以说是无处不在。在最开始通过一台电视讲述了人类向虫族开战的原因：“虫族利用陨石袭击地球，所以人类亲自登上虫族的星球展开反击。”导演并没有告诉我们这个原因到底是真实的还是虚假的。但如果联想纳粹的行径，很容易对其中的真实性产生怀疑。电视起到的煽动性作用也在电影中被不断强调：夸张的招兵广告、被妖魔化的虫族、从娃抓起的仇恨教育都通过电视被一一呈现，贯彻全片，起到一种无处不在的洗脑效果，这在范霍文更早的《机械战警》中也有过类似的体现。而在展示军队生活时，范霍文采用了一种相当夸张的方式：男女混浴同住，性别差异被抹杀；神似纳粹军服的军装，每个士兵都要在打仗前文上神似纳粹标志的图案；还有军队中种种不合常理的规则和酷刑。大量的纳粹符号被明确地暴露出来，又可以无比清晰地察觉出每个符号的背后意义所在。 从全片来看，表面上瑞科看似是在一次一次的苦难中成长，完成蜕变，最终走向胜利，而实际上这是一个个体被逐渐洗脑而最终陷入集体狂欢的过程。有一点需要特别提出，最后瑞科发现了所谓的机动部队只不过是为其他部队卖命送死的棋子罢了，但在明知道真相的情况下，他仍选择继续作战。这样极端的意识形态显然已经进入他的内心深处，即便瑞科知道了它的虚假性，却仍会选择接受并甘愿成为其中的一份子。所以这样来看它实际讲述了瑞科从最初逐渐相信纳粹的意识形态，到之后逐渐发现了其中的虚伪性，但却又无法摆脱而在最后陷入狂欢的状态中的过程。 由此，这不仅仅是一部爆米花电影，它在满足商业性的同时，巧妙完成了作者私人的表达。',
+      reviewEn: 'In 1959, the American science fiction master Robert A. Heinlein published his representative work Starship Troopers, which immediately drew widespread criticism for its alleged “promotion of fascism.” Nearly forty years later, however, the well-established Hollywood director Paul Verhoeven decided to adapt it into a film.
+
+Having experienced World War II firsthand as a child, Verhoeven developed a lasting fascination with Nazi symbolism and the worship of authoritarian power—elements that appear prominently throughout many of his works. Naturally, this has led some critics to accuse him of “promoting Nazism,” but it also helps explain why he would be drawn to the themes of this novel.
+
+Amid fierce ideological criticism from both audiences and critics, this $100 million production ultimately ended in a box office failure. So does the film promote fascism, or does it satirize it? This is not an easy question to answer. However, if we look closely at the film itself, it presents the mechanisms of Nazism in a strikingly original and sophisticated way.
+
+The narrative progression of the film is highly Hollywood in style, and both the characterization and character development closely resemble those of conventional commercial blockbusters. As a result, it is easy to dismiss it as a shallow piece of popcorn entertainment. Yet a more careful viewing reveals that these seemingly formulaic plot elements are in fact cleverly subordinated to the film’s overarching theme. From this emerges a meaning that sharply diverges from typical Hollywood blockbusters, producing what appears to be a form of irony or satire.
+
+Nazi symbolism is pervasive throughout the film. At the very beginning, a television broadcast explains the reason for humanity’s war against the alien “bugs”: “The bugs attacked Earth using asteroids, so humanity launched a counterattack by invading their planet.” The director never clarifies whether this justification is true or fabricated. However, when viewed in light of Nazi historical behavior, it is difficult not to question its credibility.
+
+The propagandistic role of television is repeatedly emphasized: exaggerated recruitment advertisements, the demonization of the alien enemy, and indoctrination of hatred from an early age are all presented through TV broadcasts. These elements run throughout the film, creating an omnipresent brainwashing effect—a technique that had already appeared in Verhoeven’s earlier film RoboCop.
+
+When depicting military life, Verhoeven adopts an intentionally exaggerated approach: men and women live and bathe together, erasing gender distinctions; uniforms strongly resemble those of the Nazis; soldiers mark themselves with symbols reminiscent of Nazi insignia before battle; and the military operates under a series of irrational rules and brutal punishments. These numerous Nazi symbols are openly displayed, and the meanings behind them can be clearly perceived.
+
+From the perspective of the entire film, it may seem on the surface that the protagonist, Rico, grows through hardship and ultimately achieves victory. In reality, however, this is a process in which an individual is gradually indoctrinated and ultimately absorbed into a collective frenzy. One crucial detail deserves special attention: Rico eventually realizes that the so-called Mobile Infantry are merely expendable pawns, sacrificed for the benefit of other forces. Yet even after recognizing this truth, he still chooses to continue fighting.
+
+This indicates that the ideology has already taken deep root within him. Even when Rico becomes aware of its falsehood, he continues to accept it and willingly becomes part of it. In this sense, the film portrays Rico’s journey from initially embracing fascist ideology, to gradually recognizing its hypocrisy, yet ultimately being unable to escape it and falling into a state of collective ecstasy.
+
+Thus, this is far more than a simple popcorn movie. While fulfilling its commercial function, it also skillfully conveys the director’s personal expression.'
     }
   ];
 
-  const top10 = [
-    { filmIndex: 0 },  // 2001太空漫游
-    { filmIndex: 1 },  // 猎鹿人
-    { filmIndex: 3 },  // 七武士
-    { filmIndex: 2 },  // 花样年华
-    { filmIndex: 4 },  // 潜行者
-    null, null, null, null, null  // 待添加
+  // ══════════════════════════════════════════════════
+  //  十佳数据 — 独立于影评，只在「十佳」选项卡显示
+  //  Top 10 data — separate from reviews, shown only in Top 10 tab
+  // ══════════════════════════════════════════════════
+
+  const top10Films = [
+    {
+      zh: '穆赫兰道', en: 'Mulholland Drive',
+      dirZh: '大卫·林奇', dirEn: 'David Lynch', year: 2001,
+      letterboxd: 'https://letterboxd.com/film/mulholland-drive/',
+      imdb: 'https://www.imdb.com/title/tt0166924/'
+    },
+    {
+      zh: '蜂巢幽灵', en: 'The Spirit of the Beehive',
+      dirZh: '维克多·艾里斯', dirEn: 'Víctor Erice', year: 1973,
+      letterboxd: 'https://letterboxd.com/film/the-spirit-of-the-beehive/',
+      imdb: 'https://www.imdb.com/title/tt0069765/'
+    },
+    {
+      zh: '绝美之城', en: 'The Great Beauty',
+      dirZh: '保罗·索伦蒂诺', dirEn: 'Paolo Sorrentino', year: 2013,
+      letterboxd: 'https://letterboxd.com/film/the-great-beauty/',
+      imdb: 'https://www.imdb.com/title/tt2358891/'
+    },
+    {
+      zh: '现代启示录', en: 'Apocalypse Now',
+      dirZh: '弗朗西斯·福特·科波拉', dirEn: 'Francis Ford Coppola', year: 1979,
+      letterboxd: 'https://letterboxd.com/film/apocalypse-now/',
+      imdb: 'https://www.imdb.com/title/tt0078788/'
+    },
+    {
+      zh: '罗塞塔', en: 'Rosetta',
+      dirZh: '达内兄弟', dirEn: 'Dardenne Brothers', year: 1999,
+      letterboxd: 'https://letterboxd.com/film/rosetta/',
+      imdb: 'https://www.imdb.com/title/tt0200071/'
+    },
+    {
+      zh: '我是古巴', en: 'I Am Cuba',
+      dirZh: '米哈伊尔·卡拉托佐夫', dirEn: 'Mikhail Kalatozov', year: 1964,
+      letterboxd: 'https://letterboxd.com/film/i-am-cuba/',
+      imdb: 'https://www.imdb.com/title/tt0058604/'
+    },
+    {
+      zh: '皮囊之下', en: 'Under the Skin',
+      dirZh: '乔纳森·格雷泽', dirEn: 'Jonathan Glazer', year: 2013,
+      letterboxd: 'https://letterboxd.com/film/under-the-skin-2013/',
+      imdb: 'https://www.imdb.com/title/tt1441395/'
+    },
+    {
+      zh: '玩乐时间', en: 'Playtime',
+      dirZh: '雅克·塔蒂', dirEn: 'Jacques Tati', year: 1967,
+      letterboxd: 'https://letterboxd.com/film/playtime/',
+      imdb: 'https://www.imdb.com/title/tt0062136/'
+    },
+    {
+      zh: '白丝带', en: 'The White Ribbon',
+      dirZh: '迈克尔·哈内克', dirEn: 'Michael Haneke', year: 2009,
+      letterboxd: 'https://letterboxd.com/film/the-white-ribbon/',
+      imdb: 'https://www.imdb.com/title/tt1149362/'
+    },
+    {
+      zh: '生活的发现', en: 'Turning Gate',
+      dirZh: '洪常秀', dirEn: 'Hong Sang-soo', year: 2002,
+      letterboxd: 'https://letterboxd.com/film/turning-gate/',
+      imdb: 'https://www.imdb.com/title/tt0313550/'
+    }
   ];
 
   // ══════════════════════════════════════════════════
@@ -641,7 +656,6 @@
       const title = currentLang === 'zh' ? film.zh : film.en;
       const dir = currentLang === 'zh' ? film.dirZh : film.dirEn;
 
-      // Film row
       const tr = document.createElement('tr');
       tr.className = 'film-row' + (hasReview ? ' has-review' : '');
       tr.dataset.index = i;
@@ -655,7 +669,6 @@
       `;
       tbody.appendChild(tr);
 
-      // Review row (hidden by default)
       if (hasReview) {
         const reviewTr = document.createElement('tr');
         reviewTr.className = 'review-row';
@@ -673,13 +686,9 @@
         `;
         tbody.appendChild(reviewTr);
 
-        // Click handler
         tr.addEventListener('click', (e) => {
-          // Don't toggle if clicking a link
           if (e.target.closest('a')) return;
-          const expand = document.getElementById('expand-' + i);
-          const isOpen = expand.classList.contains('open');
-          expand.classList.toggle('open');
+          document.getElementById('expand-' + i).classList.toggle('open');
           tr.classList.toggle('expanded');
         });
       }
@@ -689,36 +698,25 @@
   function renderTop10() {
     const ol = document.getElementById('topList');
     ol.innerHTML = '';
-    top10.forEach((entry, i) => {
+    top10Films.forEach((film) => {
       const li = document.createElement('li');
       li.className = 'top-item';
-      if (entry && entry.filmIndex != null) {
-        const film = films[entry.filmIndex];
-        const title = currentLang === 'zh' ? film.zh : film.en;
-        const dirShort = currentLang === 'zh'
-          ? film.dirZh.split('·').pop().trim()
-          : film.dirEn.split(' ').pop();
-        li.innerHTML = `
-          <div class="top-info">
-            <h4>${title}</h4>
-            <span>${dirShort} · ${film.year}</span>
-          </div>
-          <div class="top-links">${linkHTML(film)}</div>
-        `;
-      } else {
-        const placeholder = currentLang === 'zh' ? '（待添加）' : '(To be added)';
-        li.innerHTML = `
-          <div class="top-info">
-            <h4>${placeholder}</h4>
-            <span>—</span>
-          </div>
-        `;
-      }
+      const title = currentLang === 'zh' ? film.zh : film.en;
+      const dirShort = currentLang === 'zh'
+        ? film.dirZh.split('·').pop().trim()
+        : film.dirEn.split(' ').pop();
+      li.innerHTML = `
+        <div class="top-info">
+          <h4>${title}</h4>
+          <span>${dirShort} · ${film.year}</span>
+        </div>
+        <div class="top-links">${linkHTML(film)}</div>
+      `;
       ol.appendChild(li);
     });
   }
 
-  // ── Generate Sprocket Holes ──
+  // ── Sprocket Holes ──
   function fillSprockets() {
     const strips = document.querySelectorAll('.sprocket-strip');
     const count = Math.ceil(window.innerHeight / 30);
@@ -737,7 +735,6 @@
   // ── Tab Navigation ──
   const tabs = document.querySelectorAll('.nav-tab');
   const panels = document.querySelectorAll('.tab-panel');
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
@@ -762,7 +759,6 @@
         el.innerHTML = val;
       }
     });
-    // Re-render dynamic content
     renderFilmTable();
     renderTop10();
   }
