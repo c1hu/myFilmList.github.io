@@ -18,6 +18,9 @@
     --accent-dim: #c49e10;
     --sprocket: #1e1e1e;
     --grain-opacity: 0.06;
+    --imdb: #f5c518;
+    --letterboxd: #00e054;
+    --douban: #ffffff;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -196,7 +199,36 @@
   .about-text p { margin-bottom: 16px; }
   .about-text .highlight { color: var(--accent); }
 
-  /* ── Film List Table ── */
+  /* ── Douban Button ── */
+  .douban-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 10px 22px;
+    font-family: 'Silkscreen', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    margin-top: 8px;
+  }
+  .douban-btn:hover {
+    border-color: #fff;
+    background: #111;
+    box-shadow: 0 0 12px rgba(255,255,255,0.08);
+  }
+  .douban-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+    flex-shrink: 0;
+  }
+
+  /* ── Film List (merged with reviews) ── */
   .film-table {
     width: 100%;
     border-collapse: collapse;
@@ -216,10 +248,31 @@
     padding: 12px 16px;
     border-bottom: 1px solid #1a1a1a;
     color: var(--text);
-    vertical-align: top;
+    vertical-align: middle;
   }
-  .film-table tr:hover td {
+  .film-row {
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .film-row:hover td {
     background: var(--surface);
+  }
+  .film-row.has-review td:first-child {
+    position: relative;
+    padding-left: 28px;
+  }
+  .film-row.has-review td:first-child::before {
+    content: '▸';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 11px;
+    transition: transform 0.25s;
+  }
+  .film-row.expanded td:first-child::before {
+    transform: translateY(-50%) rotate(90deg);
   }
   .film-table .rating {
     color: var(--accent);
@@ -236,40 +289,69 @@
     margin: 1px 2px;
   }
 
-  /* ── Review Cards ── */
-  .review-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 28px 30px;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
+  /* ── External Link Icons ── */
+  .ext-links {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
   }
-  .review-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--accent);
+  .ext-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: all 0.2s;
+    opacity: 0.6;
   }
-  .review-card h3 {
+  .ext-link:hover {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  .ext-link.imdb {
+    background: var(--imdb);
+    color: #000;
     font-family: 'Press Start 2P', monospace;
-    font-size: 12px;
-    color: var(--text);
-    margin-bottom: 6px;
+    font-size: 5px;
+    font-weight: bold;
+    letter-spacing: -0.5px;
   }
-  .review-meta {
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-bottom: 14px;
+  .ext-link.letterboxd {
+    background: transparent;
+    border: 1.5px solid var(--letterboxd);
   }
-  .review-body {
+  .ext-link.letterboxd svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ── Review Expand Row ── */
+  .review-row td {
+    padding: 0 !important;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .review-expand {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+  }
+  .review-expand.open {
+    max-height: 400px;
+  }
+  .review-expand-inner {
+    padding: 24px 30px;
+  }
+  .review-expand-inner p {
     font-family: 'Silkscreen', monospace;
     font-size: 13px;
     line-height: 2;
     color: #ccc;
   }
-  .review-rating {
+  .review-expand-inner .review-rating {
     margin-top: 14px;
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
@@ -285,7 +367,7 @@
   .top-item {
     counter-increment: top;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 20px;
     padding: 16px 0;
     border-bottom: 1px solid #1a1a1a;
@@ -306,6 +388,9 @@
   .top-item:nth-child(-n+3)::before {
     text-shadow: 0 0 10px rgba(245,197,24,0.4);
   }
+  .top-info {
+    flex: 1;
+  }
   .top-info h4 {
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
@@ -316,6 +401,12 @@
     font-family: 'Silkscreen', monospace;
     font-size: 12px;
     color: var(--text-dim);
+  }
+  .top-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
   }
 
   /* ── Footer ── */
@@ -357,6 +448,9 @@
     .section-title { font-size: 11px; }
     .film-table { font-size: 10px; }
     .film-table th, .film-table td { padding: 8px 8px; }
+    .ext-link { width: 20px; height: 20px; }
+    .ext-link.imdb { font-size: 4px; }
+    .ext-link.letterboxd svg { width: 12px; height: 12px; }
   }
 </style>
 </head>
@@ -380,10 +474,9 @@
 
   <!-- Navigation -->
   <nav id="mainNav">
-    <button class="nav-tab active" data-tab="about"    data-zh="关于我" data-en="About Me">关于我</button>
-    <button class="nav-tab"        data-tab="filmlist" data-zh="片单" data-en="My Film List">片单</button>
-    <button class="nav-tab"        data-tab="reviews"  data-zh="影评" data-en="My Reviews">影评</button>
-    <button class="nav-tab"        data-tab="top10"    data-zh="十佳" data-en="Top 10">十佳</button>
+    <button class="nav-tab active" data-tab="about"   data-zh="关于我" data-en="About Me">关于我</button>
+    <button class="nav-tab"        data-tab="reviews" data-zh="影评" data-en="Reviews">影评</button>
+    <button class="nav-tab"        data-tab="top10"   data-zh="十佳" data-en="Top 10">十佳</button>
   </nav>
 
   <!-- Content -->
@@ -404,13 +497,19 @@
            data-en='📧 Contact me: <span class="highlight">chuyuli96@gmail.com</span>'>
           📧 联系我：<span class="highlight">chuyuli96@gmail.com</span>
         </p>
+        <p>
+          <a href="https://www.douban.com/people/83482941/" target="_blank" rel="noopener" class="douban-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5h20v1.5H2V5zm1.5 3.5h17v8h-2.09l1.09 2.5h-2.18l-1.09-2.5H7.77l-1.09 2.5H4.5l1.09-2.5H3.5v-8zm2 1.5v5h13v-5h-13z"/></svg>
+            <span data-zh="我的豆瓣" data-en="My Douban">我的豆瓣</span>
+          </a>
+        </p>
       </div>
     </div>
 
-    <!-- ═══════ MY FILM LIST ═══════ -->
-    <div class="tab-panel" id="panel-filmlist">
-      <h2 class="section-title" data-zh="片单" data-en="My Film List">片单</h2>
-      <table class="film-table">
+    <!-- ═══════ REVIEWS (merged film list + reviews) ═══════ -->
+    <div class="tab-panel" id="panel-reviews">
+      <h2 class="section-title" data-zh="影评" data-en="Reviews">影评</h2>
+      <table class="film-table" id="filmTable">
         <thead>
           <tr>
             <th data-zh="片名" data-en="Title">片名</th>
@@ -418,151 +517,20 @@
             <th data-zh="年份" data-en="Year">年份</th>
             <th data-zh="类型" data-en="Genre">类型</th>
             <th data-zh="评分" data-en="Rating">评分</th>
+            <th data-zh="链接" data-en="Links">链接</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- ▼ 在这里添加更多电影条目 / Add more films here ▼ -->
-          <tr>
-            <td data-zh="2001太空漫游" data-en="2001: A Space Odyssey">2001太空漫游</td>
-            <td data-zh="斯坦利·库布里克" data-en="Stanley Kubrick">斯坦利·库布里克</td>
-            <td>1968</td>
-            <td><span class="genre-tag" data-zh="科幻" data-en="Sci-Fi">科幻</span></td>
-            <td class="rating">★★★★★</td>
-          </tr>
-          <tr>
-            <td data-zh="猎鹿人" data-en="The Deer Hunter">猎鹿人</td>
-            <td data-zh="迈克尔·西米诺" data-en="Michael Cimino">迈克尔·西米诺</td>
-            <td>1978</td>
-            <td><span class="genre-tag" data-zh="战争" data-en="War">战争</span><span class="genre-tag" data-zh="剧情" data-en="Drama">剧情</span></td>
-            <td class="rating">★★★★★</td>
-          </tr>
-          <tr>
-            <td data-zh="花样年华" data-en="In the Mood for Love">花样年华</td>
-            <td data-zh="王家卫" data-en="Wong Kar-wai">王家卫</td>
-            <td>2000</td>
-            <td><span class="genre-tag" data-zh="爱情" data-en="Romance">爱情</span><span class="genre-tag" data-zh="剧情" data-en="Drama">剧情</span></td>
-            <td class="rating">★★★★☆</td>
-          </tr>
-          <tr>
-            <td data-zh="七武士" data-en="Seven Samurai">七武士</td>
-            <td data-zh="黑泽明" data-en="Akira Kurosawa">黑泽明</td>
-            <td>1954</td>
-            <td><span class="genre-tag" data-zh="动作" data-en="Action">动作</span><span class="genre-tag" data-zh="剧情" data-en="Drama">剧情</span></td>
-            <td class="rating">★★★★★</td>
-          </tr>
-          <tr>
-            <td data-zh="潜行者" data-en="Stalker">潜行者</td>
-            <td data-zh="安德烈·塔可夫斯基" data-en="Andrei Tarkovsky">安德烈·塔可夫斯基</td>
-            <td>1979</td>
-            <td><span class="genre-tag" data-zh="科幻" data-en="Sci-Fi">科幻</span><span class="genre-tag" data-zh="剧情" data-en="Drama">剧情</span></td>
-            <td class="rating">★★★★☆</td>
-          </tr>
-          <!-- ▲ 在这里添加更多电影条目 / Add more films here ▲ -->
+        <tbody id="filmBody">
+          <!-- Populated by JS -->
         </tbody>
       </table>
-    </div>
-
-    <!-- ═══════ MY REVIEWS ═══════ -->
-    <div class="tab-panel" id="panel-reviews">
-      <h2 class="section-title" data-zh="影评" data-en="My Reviews">影评</h2>
-
-      <!-- ▼ 在这里添加更多影评 / Add more reviews here ▼ -->
-      <div class="review-card">
-        <h3 data-zh="2001太空漫游" data-en="2001: A Space Odyssey">2001太空漫游</h3>
-        <div class="review-meta">
-          <span data-zh="斯坦利·库布里克 / 1968" data-en="Stanley Kubrick / 1968">斯坦利·库布里克 / 1968</span>
-        </div>
-        <div class="review-body">
-          <p data-zh="库布里克用影像重新定义了科幻电影的边界。从猿人到星孩，人类文明的演化被压缩进一场视觉与哲学的交响。每一帧都是对未知的敬畏。"
-             data-en="Kubrick redefined the boundaries of sci-fi cinema through imagery. From ape to star-child, the evolution of human civilization is compressed into a symphony of visuals and philosophy. Every frame is a reverence for the unknown.">
-            库布里克用影像重新定义了科幻电影的边界。从猿人到星孩，人类文明的演化被压缩进一场视觉与哲学的交响。每一帧都是对未知的敬畏。
-          </p>
-        </div>
-        <div class="review-rating">★★★★★</div>
-      </div>
-
-      <div class="review-card">
-        <h3 data-zh="猎鹿人" data-en="The Deer Hunter">猎鹿人</h3>
-        <div class="review-meta">
-          <span data-zh="迈克尔·西米诺 / 1978" data-en="Michael Cimino / 1978">迈克尔·西米诺 / 1978</span>
-        </div>
-        <div class="review-body">
-          <p data-zh="战争电影的巅峰之作。俄罗斯轮盘赌的场景至今令人窒息。西米诺展现的不是战场上的英雄主义，而是战争如何摧毁普通人的灵魂。"
-             data-en="A pinnacle of war cinema. The Russian roulette scenes remain suffocating to this day. Cimino shows not heroism on the battlefield, but how war destroys the souls of ordinary people.">
-            战争电影的巅峰之作。俄罗斯轮盘赌的场景至今令人窒息。西米诺展现的不是战场上的英雄主义，而是战争如何摧毁普通人的灵魂。
-          </p>
-        </div>
-        <div class="review-rating">★★★★★</div>
-      </div>
-      <!-- ▲ 在这里添加更多影评 / Add more reviews here ▲ -->
     </div>
 
     <!-- ═══════ TOP 10 ═══════ -->
     <div class="tab-panel" id="panel-top10">
       <h2 class="section-title" data-zh="我的十佳" data-en="My Top 10">我的十佳</h2>
-      <ol class="top-list">
-        <!-- ▼ 修改你的十佳排名 / Edit your top 10 ranking here ▼ -->
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="2001太空漫游" data-en="2001: A Space Odyssey">2001太空漫游</h4>
-            <span data-zh="库布里克 · 1968" data-en="Kubrick · 1968">库布里克 · 1968</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="猎鹿人" data-en="The Deer Hunter">猎鹿人</h4>
-            <span data-zh="西米诺 · 1978" data-en="Cimino · 1978">西米诺 · 1978</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="七武士" data-en="Seven Samurai">七武士</h4>
-            <span data-zh="黑泽明 · 1954" data-en="Kurosawa · 1954">黑泽明 · 1954</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="花样年华" data-en="In the Mood for Love">花样年华</h4>
-            <span data-zh="王家卫 · 2000" data-en="Wong Kar-wai · 2000">王家卫 · 2000</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="潜行者" data-en="Stalker">潜行者</h4>
-            <span data-zh="塔可夫斯基 · 1979" data-en="Tarkovsky · 1979">塔可夫斯基 · 1979</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="（待添加）" data-en="(To be added)">（待添加）</h4>
-            <span>—</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="（待添加）" data-en="(To be added)">（待添加）</h4>
-            <span>—</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="（待添加）" data-en="(To be added)">（待添加）</h4>
-            <span>—</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="（待添加）" data-en="(To be added)">（待添加）</h4>
-            <span>—</span>
-          </div>
-        </li>
-        <li class="top-item">
-          <div class="top-info">
-            <h4 data-zh="（待添加）" data-en="(To be added)">（待添加）</h4>
-            <span>—</span>
-          </div>
-        </li>
-        <!-- ▲ 修改你的十佳排名 / Edit your top 10 ranking here ▲ -->
+      <ol class="top-list" id="topList">
+        <!-- Populated by JS -->
       </ol>
     </div>
 
@@ -574,6 +542,182 @@
 </div>
 
 <script>
+  // ══════════════════════════════════════════════════
+  //  DATA — Edit your films, reviews, and top 10 here
+  // ══════════════════════════════════════════════════
+
+  const films = [
+    {
+      zh: '2001太空漫游', en: '2001: A Space Odyssey',
+      dirZh: '斯坦利·库布里克', dirEn: 'Stanley Kubrick',
+      year: 1968,
+      genreZh: ['科幻'], genreEn: ['Sci-Fi'],
+      rating: '★★★★★',
+      letterboxd: 'https://letterboxd.com/film/2001-a-space-odyssey/',
+      imdb: 'https://www.imdb.com/title/tt0062622/',
+      reviewZh: '库布里克用影像重新定义了科幻电影的边界。从猿人到星孩，人类文明的演化被压缩进一场视觉与哲学的交响。每一帧都是对未知的敬畏。',
+      reviewEn: 'Kubrick redefined the boundaries of sci-fi cinema through imagery. From ape to star-child, the evolution of human civilization is compressed into a symphony of visuals and philosophy. Every frame is a reverence for the unknown.'
+    },
+    {
+      zh: '猎鹿人', en: 'The Deer Hunter',
+      dirZh: '迈克尔·西米诺', dirEn: 'Michael Cimino',
+      year: 1978,
+      genreZh: ['战争', '剧情'], genreEn: ['War', 'Drama'],
+      rating: '★★★★★',
+      letterboxd: 'https://letterboxd.com/film/the-deer-hunter/',
+      imdb: 'https://www.imdb.com/title/tt0077416/',
+      reviewZh: '战争电影的巅峰之作。俄罗斯轮盘赌的场景至今令人窒息。西米诺展现的不是战场上的英雄主义，而是战争如何摧毁普通人的灵魂。',
+      reviewEn: 'A pinnacle of war cinema. The Russian roulette scenes remain suffocating to this day. Cimino shows not heroism on the battlefield, but how war destroys the souls of ordinary people.'
+    },
+    {
+      zh: '花样年华', en: 'In the Mood for Love',
+      dirZh: '王家卫', dirEn: 'Wong Kar-wai',
+      year: 2000,
+      genreZh: ['爱情', '剧情'], genreEn: ['Romance', 'Drama'],
+      rating: '★★★★☆',
+      letterboxd: 'https://letterboxd.com/film/in-the-mood-for-love/',
+      imdb: 'https://www.imdb.com/title/tt0118694/',
+      reviewZh: '',
+      reviewEn: ''
+    },
+    {
+      zh: '七武士', en: 'Seven Samurai',
+      dirZh: '黑泽明', dirEn: 'Akira Kurosawa',
+      year: 1954,
+      genreZh: ['动作', '剧情'], genreEn: ['Action', 'Drama'],
+      rating: '★★★★★',
+      letterboxd: 'https://letterboxd.com/film/seven-samurai/',
+      imdb: 'https://www.imdb.com/title/tt0047478/',
+      reviewZh: '',
+      reviewEn: ''
+    },
+    {
+      zh: '潜行者', en: 'Stalker',
+      dirZh: '安德烈·塔可夫斯基', dirEn: 'Andrei Tarkovsky',
+      year: 1979,
+      genreZh: ['科幻', '剧情'], genreEn: ['Sci-Fi', 'Drama'],
+      rating: '★★★★☆',
+      letterboxd: 'https://letterboxd.com/film/stalker/',
+      imdb: 'https://www.imdb.com/title/tt0079944/',
+      reviewZh: '',
+      reviewEn: ''
+    }
+  ];
+
+  const top10 = [
+    { filmIndex: 0 },  // 2001太空漫游
+    { filmIndex: 1 },  // 猎鹿人
+    { filmIndex: 3 },  // 七武士
+    { filmIndex: 2 },  // 花样年华
+    { filmIndex: 4 },  // 潜行者
+    null, null, null, null, null  // 待添加
+  ];
+
+  // ══════════════════════════════════════════════════
+  //  RENDER
+  // ══════════════════════════════════════════════════
+
+  let currentLang = 'zh';
+
+  function linkHTML(film) {
+    return `<span class="ext-links">
+      <a href="${film.letterboxd}" target="_blank" rel="noopener" class="ext-link letterboxd" title="Letterboxd">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="12" r="4" fill="none" stroke="#00e054" stroke-width="2"/>
+          <circle cx="16" cy="12" r="4" fill="none" stroke="#40bcf4" stroke-width="2"/>
+        </svg>
+      </a>
+      <a href="${film.imdb}" target="_blank" rel="noopener" class="ext-link imdb" title="IMDb">IMDb</a>
+    </span>`;
+  }
+
+  function renderFilmTable() {
+    const tbody = document.getElementById('filmBody');
+    tbody.innerHTML = '';
+    films.forEach((film, i) => {
+      const hasReview = film.reviewZh || film.reviewEn;
+      const genres = currentLang === 'zh' ? film.genreZh : film.genreEn;
+      const genreHTML = genres.map(g => `<span class="genre-tag">${g}</span>`).join('');
+      const title = currentLang === 'zh' ? film.zh : film.en;
+      const dir = currentLang === 'zh' ? film.dirZh : film.dirEn;
+
+      // Film row
+      const tr = document.createElement('tr');
+      tr.className = 'film-row' + (hasReview ? ' has-review' : '');
+      tr.dataset.index = i;
+      tr.innerHTML = `
+        <td>${title}</td>
+        <td>${dir}</td>
+        <td>${film.year}</td>
+        <td>${genreHTML}</td>
+        <td class="rating">${film.rating}</td>
+        <td>${linkHTML(film)}</td>
+      `;
+      tbody.appendChild(tr);
+
+      // Review row (hidden by default)
+      if (hasReview) {
+        const reviewTr = document.createElement('tr');
+        reviewTr.className = 'review-row';
+        reviewTr.id = 'review-' + i;
+        const review = currentLang === 'zh' ? film.reviewZh : film.reviewEn;
+        reviewTr.innerHTML = `
+          <td colspan="6">
+            <div class="review-expand" id="expand-${i}">
+              <div class="review-expand-inner">
+                <p>${review}</p>
+                <div class="review-rating">${film.rating}</div>
+              </div>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(reviewTr);
+
+        // Click handler
+        tr.addEventListener('click', (e) => {
+          // Don't toggle if clicking a link
+          if (e.target.closest('a')) return;
+          const expand = document.getElementById('expand-' + i);
+          const isOpen = expand.classList.contains('open');
+          expand.classList.toggle('open');
+          tr.classList.toggle('expanded');
+        });
+      }
+    });
+  }
+
+  function renderTop10() {
+    const ol = document.getElementById('topList');
+    ol.innerHTML = '';
+    top10.forEach((entry, i) => {
+      const li = document.createElement('li');
+      li.className = 'top-item';
+      if (entry && entry.filmIndex != null) {
+        const film = films[entry.filmIndex];
+        const title = currentLang === 'zh' ? film.zh : film.en;
+        const dirShort = currentLang === 'zh'
+          ? film.dirZh.split('·').pop().trim()
+          : film.dirEn.split(' ').pop();
+        li.innerHTML = `
+          <div class="top-info">
+            <h4>${title}</h4>
+            <span>${dirShort} · ${film.year}</span>
+          </div>
+          <div class="top-links">${linkHTML(film)}</div>
+        `;
+      } else {
+        const placeholder = currentLang === 'zh' ? '（待添加）' : '(To be added)';
+        li.innerHTML = `
+          <div class="top-info">
+            <h4>${placeholder}</h4>
+            <span>—</span>
+          </div>
+        `;
+      }
+      ol.appendChild(li);
+    });
+  }
+
   // ── Generate Sprocket Holes ──
   function fillSprockets() {
     const strips = document.querySelectorAll('.sprocket-strip');
@@ -604,17 +748,12 @@
   });
 
   // ── Language Switch ──
-  let currentLang = 'zh';
-
   function switchLang(lang) {
     currentLang = lang;
-    // Toggle button states
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.textContent.trim() === (lang === 'zh' ? '中文' : 'EN'));
     });
-    // Update html lang attribute
     document.documentElement.lang = lang;
-    // Update all translatable elements
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
       const val = el.getAttribute('data-' + lang);
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
@@ -623,7 +762,14 @@
         el.innerHTML = val;
       }
     });
+    // Re-render dynamic content
+    renderFilmTable();
+    renderTop10();
   }
+
+  // ── Initial Render ──
+  renderFilmTable();
+  renderTop10();
 </script>
 
 </body>
