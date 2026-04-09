@@ -932,7 +932,7 @@
         labels,
         datasets: [
           { label: '豆瓣均分', data: dbVals, backgroundColor: '#3c8de8', borderWidth: 0 },
-          { label: '我的均分', data: meVals, backgroundColor: '#f5c518', borderWidth: 0 }
+          { label: '我的均分(×2)', data: meVals, backgroundColor: '#f5c518', borderWidth: 0 }
         ]
       },
       options: {
@@ -959,7 +959,7 @@
     const labelC = currentLang === 'zh' ? '国家/地区' : 'Country';
     const labelN = currentLang === 'zh' ? '影片数' : 'Films';
     const labelDb = currentLang === 'zh' ? '豆瓣均分' : 'Douban avg';
-    const labelMe = currentLang === 'zh' ? '我的均分' : 'My avg';
+    const labelMe = currentLang === 'zh' ? '我的均分(×2)' : 'My avg(×2)';
     const labelGap = currentLang === 'zh' ? '分差' : 'Gap';
 
     document.querySelectorAll('#statsTable th').forEach((th, i) => {
